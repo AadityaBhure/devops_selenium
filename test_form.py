@@ -21,7 +21,7 @@ def setup():
     return driver
 
 
-# ✅ Test 1: Valid Registration
+#  Test 1: Valid Registration
 def test_valid():
     driver = setup()
 
@@ -37,12 +37,12 @@ def test_valid():
     time.sleep(2)
 
     assert "Registration successful" in driver.page_source
-    print("✅ Valid Registration Passed")
+    print(" Valid Registration Passed")
 
     driver.quit()
 
 
-# ❌ Test 2: Age below 18
+#  Test 2: Age below 18
 def test_invalid_age():
     driver = setup()
 
@@ -58,12 +58,12 @@ def test_invalid_age():
     time.sleep(2)
 
     assert "Age must be 18+" in driver.page_source
-    print("✅ Invalid Age Test Passed")
+    print(" Invalid Age Test Passed")
 
     driver.quit()
 
 
-# ❌ Test 3: Invalid Phone
+#  Test 3: Invalid Phone
 def test_invalid_phone():
     driver = setup()
 
@@ -79,12 +79,12 @@ def test_invalid_phone():
     time.sleep(2)
 
     assert "Invalid phone number" in driver.page_source
-    print("✅ Invalid Phone Test Passed")
+    print(" Invalid Phone Test Passed")
 
     driver.quit()
 
 
-# ❌ Test 4: Weak Password
+#  Test 4: Weak Password
 def test_weak_password():
     driver = setup()
 
@@ -100,7 +100,7 @@ def test_weak_password():
     time.sleep(2)
 
     assert "Password must be at least 6 characters" in driver.page_source
-    print("✅ Weak Password Test Passed")
+    print(" Weak Password Test Passed")
 
     driver.quit()
 
@@ -111,4 +111,4 @@ if __name__ == "__main__":
     test_invalid_phone()
     test_weak_password()
 
-    print("\n🎯 ALL TESTS COMPLETED")
+    print("\n ALL TESTS COMPLETED")
