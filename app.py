@@ -9,22 +9,29 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    name = request.form.get('name')
-    age = request.form.get('age')
-    phone = request.form.get('phone')
+    name = request.form.get('name', '').strip()
+    age = request.form.get('age', '').strip()
+    phone = request.form.get('phone', '').strip()
 
-    # Validation
+    # Debug print (VERY IMPORTANT)
+    print("DEBUG INPUT:", name, age, phone)
+
     if not name:
         message = "Name is required"
+
     elif not age.isdigit() or int(age) < 18:
         message = "Invalid age"
+
     elif not phone.isdigit() or len(phone) != 10:
         message = "Invalid phone number"
+
     else:
         message = "Registration successful"
+
+    print("DEBUG OUTPUT:", message)
 
     return render_template('index.html', message=message)
 
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(port=5000, debug=True)
