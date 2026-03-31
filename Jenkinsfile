@@ -9,7 +9,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/YOUR_USERNAME/flask-selenium-project.git'
+                git 'https://github.com/AadityaBhure/devops_selenium.git'
             }
         }
 
