@@ -1,41 +1,42 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-@app.route('/')
-def form():
-    return render_template('form.html')
+HTML_FORM = """
+<form method="POST">
+    Name: <input type="text" name="name"><br>
+    Age: <input type="text" name="age"><br>
+    Phone: <input type="text" name="phone"><br>
+    <input type="submit" value="Submit">
+</form>
+<p>{{ message }}</p>
+"""
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    try:
+@app.route('/', methods=['GET', 'POST'])
+def form():
+    message = ""
+
+    if request.method == 'POST':
         name = request.form.get('name')
         age = request.form.get('age')
-        gender = request.form.get('gender')
         phone = request.form.get('phone')
-        email = request.form.get('email')
-        address = request.form.get('address')
-        password = request.form.get('password')
 
-        if not all([name, age, gender, phone, email, address, password]):
-            return "Error: All fields are required "
+        # Name validation
+        if not name:
+            message = "Name is required"
 
-        if not age.isdigit() or int(age) < 18:
-            return "Error: Age must be 18+ "
+        # Age validation
+        elif not age.isdigit() or int(age) < 18:
+            message = "Invalid age"
 
-        if len(phone) != 10 or not phone.isdigit():
-            return "Error: Invalid phone number "
+        # Phone validation
+        elif not phone.isdigit() or len(phone) != 10:
+            message = "Invalid phone number"
 
-        if "@" not in email:
-            return "Error: Invalid email "
+        else:
+            message = "Registration successful"
 
-        if len(password) < 6:
-            return "Error: Password must be at least 6 characters "
+    return render_template_string(HTML_FORM, message=message)
 
-        return f"Registration successful! Welcome {name} "
-
-    except Exception as e:
-        return f"Error: {str(e)}"
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(port=5000)
