@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/AadityaBhure/devops_selenium.git'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 bat 'python -m pip install --upgrade pip'
@@ -22,8 +16,8 @@ pipeline {
 
         stage('Start Flask Server') {
             steps {
-                bat 'start /B python app.py'
-                sleep 5
+                bat 'start "" /B python app.py'
+                sleep 8
             }
         }
 
@@ -35,14 +29,15 @@ pipeline {
     }
 
     post {
+        always {
+            echo '🔁 Cleaning up...'
+            bat 'taskkill /F /IM python.exe /T || exit 0'
+        }
         success {
             echo '✅ Build Successful: All tests passed!'
         }
         failure {
             echo '❌ Build Failed: Check errors in console output.'
-        }
-        always {
-            echo '🔁 Pipeline execution completed.'
         }
     }
 }
